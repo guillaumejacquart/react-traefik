@@ -1,15 +1,12 @@
 import { combineReducers } from 'redux'
 import {
   REQUEST_TRAEFIK_PROVIDERS, RECEIVE_TRAEFIK_PROVIDERS,
-  REQUEST_TRAEFIK_BACKENDS, RECEIVE_TRAEFIK_BACKENDS,
-  REQUEST_TRAEFIK_FRONTENDS, RECEIVE_TRAEFIK_FRONTENDS
+  REQUEST_CONFIG, RECEIVE_CONFIG, SET_URL
 } from '../actions'
 
 function data(state = {
   isFetching: false,
   providers: [],
-  backends: [],
-  frontends: []
 }, action) {
   switch (action.type) {
     case REQUEST_TRAEFIK_PROVIDERS:
@@ -24,29 +21,22 @@ function data(state = {
         providers: action.data,
         lastUpdatedProviders: action.receivedAt
       })
-    case REQUEST_TRAEFIK_BACKENDS:
+    case REQUEST_CONFIG:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
       })
-    case RECEIVE_TRAEFIK_BACKENDS:
+    case RECEIVE_CONFIG:
       return Object.assign({}, state, {
-        isFetching: false,
-        didInvalidate: false,
-        backends: action.data,
-        lastUpdatedBackendss: action.receivedAt
+        configReady: action.data,
+        traefik_url: action.data.url
       })
-    case REQUEST_TRAEFIK_FRONTENDS:
+    case SET_URL:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
-      })
-    case RECEIVE_TRAEFIK_FRONTENDS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        didInvalidate: false,
-        frontends: action.data,
-        lastUpdatedFrontends: action.receivedAt
+        traefik_url: action.data,
+        configReady: {
+          url: action.data
+        }
       })
     default:
       return state
@@ -57,10 +47,9 @@ function traefikData(state = { }, action) {
   switch (action.type) {
     case REQUEST_TRAEFIK_PROVIDERS:
     case RECEIVE_TRAEFIK_PROVIDERS:
-    case REQUEST_TRAEFIK_BACKENDS:
-    case RECEIVE_TRAEFIK_BACKENDS:
-    case REQUEST_TRAEFIK_FRONTENDS:
-    case RECEIVE_TRAEFIK_FRONTENDS:
+    case REQUEST_CONFIG:
+    case RECEIVE_CONFIG:
+    case SET_URL:
       return Object.assign({}, state, data(state, action))
     default:
       return state

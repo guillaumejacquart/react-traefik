@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchProviders, fetchBackends, fetchFrontends } from '../actions'
+import { fetchProviders, fetchConfigReady, setUrl } from '../actions'
 import UrlInput from '../components/UrlInput'
 import Flow from '../components/Flow'
 import SvgFlow from '../components/SvgFlow'
+import GoFlow from '../components/GoFlow'
 
 class AsyncApp extends Component {
+  timer = null
+
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
-    this.handleRefreshClick = this.handleRefreshClick.bind(this)
   }
 
   loadData(dispatch, traefik_url) {
@@ -18,32 +20,38 @@ class AsyncApp extends Component {
   }
 
   componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchConfigReady())
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.traefik_url !== prevProps.traefik_url) {
-      const { dispatch, traefik_url } = this.props
-      this.loadData(dispatch, traefik_url);
+    const { dispatch, traefik_url } = this.props
+    if(!this.props.traefikData){
+      return;
+    }
+
+    if (this.props.traefikData.traefik_url !== prevProps.traefikData.traefik_url) {
+      if (this.props.traefikData.configReady) {
+        this.timer = window.setInterval(() => this.loadData(dispatch, this.props.traefikData.traefik_url), 5000);
+      } 
+    }
+
+    if(!this.props.traefikData.configReady && this.timer){
+        window.clearTimeout(this.timer);
+        delete this.timer;
     }
   }
 
   handleChange(next_traefik_url) {
     const { dispatch } = this.props
-    this.loadData(dispatch, next_traefik_url)
-  }
-
-  handleRefreshClick(e) {
-    e.preventDefault()
-
-    const { dispatch, traefik_url } = this.props
-    this.loadData(dispatch, traefik_url)
+    dispatch(setUrl(next_traefik_url))
   }
 
   render() {
     const { traefik_url, traefikData, isFetching, lastUpdatedProviders } = this.props
     return (
       <div>
-        <UrlInput value={traefik_url}
+        <UrlInput value={traefikData.traefik_url}
           onClick={this.handleChange} />
         <p>
           {lastUpdatedProviders &&
@@ -56,9 +64,12 @@ class AsyncApp extends Component {
         {isFetching && !traefikData.providers &&
           <h2>Loading...</h2>
         }
-        {traefikData.providers &&
+        {/*{traefikData.providers &&
           <Flow data={traefikData} />
-        }
+        }*/}
+        {/*{traefikData.providers &&
+          <GoFlow data={traefikData} />
+        }*/}
         {traefikData.providers &&
           <SvgFlow data={traefikData} />
         }
@@ -68,7 +79,6 @@ class AsyncApp extends Component {
 }
 
 AsyncApp.propTypes = {
-  traefik_url: PropTypes.string,
   traefikData: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   lastUpdatedProviders: PropTypes.number,
@@ -81,7 +91,7 @@ function mapStateToProps(state) {
     isFetching,
     lastUpdatedProviders
   } = {
-      isFetching: false
+      isFetching: true
     }
 
   return {

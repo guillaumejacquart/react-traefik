@@ -1,0 +1,39 @@
+{
+  "name": "react-traefik",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "gojs": "^1.7.9",
+    "isomorphic-fetch": "^2.2.1",
+    "jointjs": "^1.1.0",
+    "jquery": "^3.2.1",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-simple-flowchart": "^1.1.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.1",
+    "redux-thunk": "^2.2.0",
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "level": "^1.6.0",
+    "morgan": "~1.8.1",
+    "request": "^2.81.0",
+    "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "npm run start-api",
+    "start-api": "node ./api/bin/www",
+    "start-front": "react-scripts start",
+    "build-front": "react-scripts build",
+    "test-front": "react-scripts test --env=jsdom",
+    "eject-front": "react-scripts eject"
+  }
+}
