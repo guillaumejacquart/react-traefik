@@ -14,12 +14,10 @@ export default class UrlInput extends Component {
   }
 
   render() {
-    const { value, onClick } = this.props
-
     return (
       <div className="row justify-content-md-center traefik-form-url">
         <form className="form-inline" onSubmit={e => this.handleSubmit(e, this.state.value)}>
-          <label className="sr-only" for="inlineFormInput">Traefik API url : </label>
+          <label className="sr-only" htmlFor="inlineFormInput">Traefik API url : </label>
           <input type="text" onChange={e => this.setState({ value: e.target.value })} className="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Traefik URL" />
 
           <button type="submit" className="btn btn-primary">Submit</button>

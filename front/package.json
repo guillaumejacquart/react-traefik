@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gojs": "^1.7.9",
+    "isomorphic-fetch": "^2.2.1",
     "jointjs": "^1.1.0",
+    "jquery": "^3.2.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

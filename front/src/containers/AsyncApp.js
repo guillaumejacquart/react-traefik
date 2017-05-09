@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { fetchProviders, fetchBackends, fetchFrontends } from '../actions'
 import UrlInput from '../components/UrlInput'
 import Flow from '../components/Flow'
+import SvgFlow from '../components/SvgFlow'
 
 class AsyncApp extends Component {
   constructor(props) {
@@ -57,6 +58,9 @@ class AsyncApp extends Component {
         }
         {traefikData.providers &&
           <Flow data={traefikData} />
+        }
+        {traefikData.providers &&
+          <SvgFlow data={traefikData} />
         }
       </div>
     )

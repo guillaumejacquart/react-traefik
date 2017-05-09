@@ -49,3 +49,19 @@ body {
   padding-left:15px;
   list-style-type: circle;
 }
+
+.traefik-provider, .traefik-frontend{
+  margin-bottom: 15px;
+}
+
+.traefik-frontend{
+  font-size: 0.9em;
+}
+
+.traefik-link{
+  background-image: url(images/arrow.png);
+  background-size: 100% 46px;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 53px;
+}
