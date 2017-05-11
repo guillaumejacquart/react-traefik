@@ -34,6 +34,7 @@
     "start-front": "react-scripts start",
     "build-front": "react-scripts build",
     "test-front": "react-scripts test --env=jsdom",
-    "eject-front": "react-scripts eject"
+    "eject-front": "react-scripts eject",
+    "install": "npm run build-front"
   }
 }
