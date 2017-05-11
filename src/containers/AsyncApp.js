@@ -6,6 +6,7 @@ import UrlInput from '../components/UrlInput'
 import Flow from '../components/Flow'
 import SvgFlow from '../components/SvgFlow'
 import GoFlow from '../components/GoFlow'
+import ThreeJSFlow from '../components/ThreeJSFlow'
 
 class AsyncApp extends Component {
   timer = null
@@ -32,6 +33,9 @@ class AsyncApp extends Component {
 
     if (this.props.traefikData.traefik_url !== prevProps.traefikData.traefik_url) {
       if (this.props.traefikData.configReady) {
+        if(!this.props.traefikData.providers){
+          this.loadData(dispatch, this.props.traefikData.traefik_url);
+        }
         this.timer = window.setInterval(() => this.loadData(dispatch, this.props.traefikData.traefik_url), 5000);
       } 
     }
@@ -70,8 +74,11 @@ class AsyncApp extends Component {
         {/*{traefikData.providers &&
           <GoFlow data={traefikData} />
         }*/}
-        {traefikData.providers &&
+        {/*traefikData.providers &&
           <SvgFlow data={traefikData} />
+        */}
+        {traefikData.providers &&
+          <ThreeJSFlow data={traefikData} />
         }
       </div>
     )

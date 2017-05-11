@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { API_URL } from '../Conf'
 
 export const REQUEST_CONFIG = 'REQUEST_CONFIG'
 export const RECEIVE_CONFIG = 'RECEIVE_CONFIG'
@@ -52,7 +53,7 @@ export function setUrl(url) {
 export function fetchConfigReady() {
   return dispatch => {
     dispatch(requestConfig())
-    return fetch(`http://localhost:3001/api/url`)
+    return fetch(`${API_URL}/api/url`)
       .then(response => response.json())
       .then((json) => {
         if (json.status === 'ok') {
@@ -66,7 +67,7 @@ export function fetchConfigReady() {
 export function fetchProviders(traefik_url) {
   return dispatch => {
     dispatch(requestTraefikProviders())
-    return fetch(`http://localhost:3001/api/url`, {
+    return fetch(`${API_URL}/api/url`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -89,7 +90,7 @@ export function fetchProviders(traefik_url) {
 }
 
 function fetchProvidersData(dispatch) {
-  return fetch(`http://localhost:3001/api/providers`)
+  return fetch(`${API_URL}/api/providers`)
     .then(response => response.json())
     .catch(function (error) {
       dispatch(receiveConfig(false))
