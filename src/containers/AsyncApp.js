@@ -7,6 +7,7 @@ import Flow from '../components/Flow'
 import SvgFlow from '../components/SvgFlow'
 import GoFlow from '../components/GoFlow'
 import ThreeJSFlow from '../components/ThreeJSFlow'
+import DagreFlow from '../components/DagreFlow'
 
 class AsyncApp extends Component {
   timer = null
@@ -77,8 +78,11 @@ class AsyncApp extends Component {
         {/*traefikData.providers &&
           <SvgFlow data={traefikData} />
         */}
-        {traefikData.providers &&
+        {/*{traefikData.providers &&
           <ThreeJSFlow data={traefikData} />
+        }*/}
+        {traefikData.providers &&
+          <DagreFlow data={traefikData} />
         }
       </div>
     )
