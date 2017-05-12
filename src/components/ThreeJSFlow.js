@@ -5,12 +5,12 @@ import { createTree } from './Tree'
 
 export default class ThreeJSFlow extends Component {
   jsonData = {
-    name: "traefik",
+    name: "internet",
     children: []
   };
 
   routesData = {
-    name: "Internet",
+    name: "traefik",
     children: []
   }
 
@@ -66,7 +66,7 @@ export default class ThreeJSFlow extends Component {
     }
 
     createTree("#d3-flow-svg", this.jsonData)
-    createTree("#d3-internet-svg", this.routesData, "right-to-left")
+    createTree("#d3-flow-svg", this.routesData, "right-to-left")
   }
 
   componentDidMount() {
@@ -87,7 +87,6 @@ export default class ThreeJSFlow extends Component {
   render() {
     return (
       <div id="d3-flow">
-        <svg id="d3-internet-svg"></svg>
         <svg id="d3-flow-svg"></svg>
       </div>
     );

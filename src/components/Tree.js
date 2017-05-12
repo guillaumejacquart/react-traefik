@@ -8,21 +8,16 @@ export function createTree(selector, data, orient) {
         bottom: 30,
         left: 90
     },
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    orient = orient || "left-to-right";
-    var orientations = {
-        "right-to-left": {
-            x: function (d) { return width - d.y; },
-            y: function (d) { return d.x; }
-        },
-        "left-to-right": {
-            x: function (d) { return d.x; },
-            y: function (d) { return d.y; }
-        }
-    };
-    var o = orientations[orient];
+    initWidth = 1024,
+    initHeight = 512,
+    depth = 130;
+    
+    var orient = orient || "left-to-right";
+    var coeff = orient == "left-to-right" ? 1 : -1;
+    margin.left = (initWidth)/2 + coeff * 40;
+    
+    var width = initWidth - margin.left - margin.right;
+    var height = initHeight - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
@@ -35,7 +30,7 @@ export function createTree(selector, data, orient) {
         margin.left + "," + margin.top + ")");
 
     var i = 0,
-        duration = 750,
+        duration = 350,
         root;
 
     // declares a tree layout and assigns the size
@@ -45,11 +40,11 @@ export function createTree(selector, data, orient) {
     root = d3.hierarchy(data, function (d) {
         return d.children;
     });
-    root.x0 = height / 2;
-    root.y0 = 0;
+    root.x0 = width / 2;
+    root.y0 = height / 2;
 
     // Collapse after the second level
-    root.children.forEach(collapse);
+    //root.children.forEach(collapse);
 
     update(root);
 
@@ -73,7 +68,7 @@ export function createTree(selector, data, orient) {
 
         // Normalize for fixed-depth.
         nodes.forEach(function (d) {
-            d.y = d.depth * 180
+            d.y = d.depth * depth
         });
 
         // ****************** Nodes section ***************************
@@ -104,10 +99,10 @@ export function createTree(selector, data, orient) {
         nodeEnter.append('text')
             .attr("dy", ".35em")
             .attr("x", function (d) {
-                return d.children || d._children ? -13 : 13;
+                return d.children || d._children ? coeff * -13 : coeff * 13;
             })
             .attr("text-anchor", function (d) {
-                return d.children || d._children ? "end" : "start";
+                return d.children || d._children ? (coeff == 1 ? "end" : "start") : (coeff == 1 ? "start" : "end");
             })
             .text(function (d) {
                 return d.data.name;
@@ -120,7 +115,7 @@ export function createTree(selector, data, orient) {
         nodeUpdate.transition()
             .duration(duration)
             .attr("transform", function (d) {
-                return "translate(" + d.y + "," + d.x + ")";
+                return "translate(" + coeff * d.y + "," + d.x + ")";
             });
 
         // Update the node attributes and style
@@ -178,14 +173,14 @@ export function createTree(selector, data, orient) {
             });
 
         // Remove any exiting links
-        var linkExit = link.exit().transition()
+        link.exit().transition()
             .duration(duration)
             .attr('d', function (d) {
                 var p = {
                     x: source.x,
                     y: source.y
                 }
-                return diagonal(o, o)
+                return diagonal(p, p)
             })
             .remove();
 
@@ -197,9 +192,9 @@ export function createTree(selector, data, orient) {
 
         // Creates a curved (diagonal) path from parent to the child nodes
         function diagonal(s, d) {
-            var path = `M ${s.y} ${s.x}
-                C ${(s.y + d.y) / 2} ${s.x},
-                  ${(s.y + d.y) / 2} ${d.x},
+            var path = `M ${coeff*s.y} ${s.x}
+                C ${coeff*(s.y + d.y) / 2} ${s.x},
+                  ${coeff*(s.y + d.y) / 2} ${d.x},
                   ${d.y} ${d.x}`
 
             return path
@@ -218,4 +213,11 @@ export function createTree(selector, data, orient) {
             update(d);
         }
     }
+}
+
+function drawTree(root, pos){
+  var SWITCH_CONST = 1;
+  if (pos === "left") {
+    SWITCH_CONST = -1;
+  }
 }

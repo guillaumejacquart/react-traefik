@@ -7,7 +7,7 @@ import Flow from '../components/Flow'
 import SvgFlow from '../components/SvgFlow'
 import GoFlow from '../components/GoFlow'
 import ThreeJSFlow from '../components/ThreeJSFlow'
-import DagreFlow from '../components/DagreFlow'
+import VisJSFlow from '../components/VisJSFlow'
 
 class AsyncApp extends Component {
   timer = null
@@ -37,7 +37,7 @@ class AsyncApp extends Component {
         if(!this.props.traefikData.providers){
           this.loadData(dispatch, this.props.traefikData.traefik_url);
         }
-        this.timer = window.setInterval(() => this.loadData(dispatch, this.props.traefikData.traefik_url), 5000);
+        this.timer = window.setInterval(() => this.loadData(dispatch, this.props.traefikData.traefik_url), 15000);
       } 
     }
 
@@ -78,12 +78,12 @@ class AsyncApp extends Component {
         {/*traefikData.providers &&
           <SvgFlow data={traefikData} />
         */}
-        {/*{traefikData.providers &&
-          <ThreeJSFlow data={traefikData} />
-        }*/}
         {traefikData.providers &&
-          <DagreFlow data={traefikData} />
+          <ThreeJSFlow data={traefikData} />
         }
+        {/*traefikData.providers &&
+          <VisJSFlow data={traefikData} />
+        */}
       </div>
     )
   }
