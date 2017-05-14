@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchProviders, fetchConfigReady, setUrl } from '../actions'
+import { fetchProviders, fetchConfigReady, setUrl, search } from '../actions'
 import UrlInput from '../components/UrlInput'
-import Flow from '../components/Flow'
-import SvgFlow from '../components/SvgFlow'
-import GoFlow from '../components/GoFlow'
+import Search from '../components/Search'
 import ThreeJSFlow from '../components/ThreeJSFlow'
-import VisJSFlow from '../components/VisJSFlow'
 
 class AsyncApp extends Component {
   timer = null
@@ -15,6 +12,7 @@ class AsyncApp extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
   }
 
   loadData(dispatch, traefik_url) {
@@ -52,12 +50,33 @@ class AsyncApp extends Component {
     dispatch(setUrl(next_traefik_url))
   }
 
+  handleSearchChange(query) {
+    const { dispatch } = this.props
+    dispatch(search(query))
+  }
+
   render() {
     const { traefik_url, traefikData, isFetching, lastUpdatedProviders } = this.props
     return (
-      <div>
-        <UrlInput value={traefikData.traefik_url}
-          onClick={this.handleChange} />
+    <div>
+      <nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <a className="navbar-brand" href="/">Traefik - diagram</a>
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link" href="https://github.com/guillaumejacquart/react-traefik">Doc</a>
+            </li>
+          </ul>
+          
+          <UrlInput value={traefikData.traefik_url}  onClick={this.handleChange} />
+        </div>
+      </nav>
+      <div className="container">
+        <Search onChange={this.handleSearchChange} />
         <p>
           {lastUpdatedProviders &&
             <span>
@@ -69,22 +88,13 @@ class AsyncApp extends Component {
         {isFetching && !traefikData.providers &&
           <h2>Loading...</h2>
         }
-        {/*{traefikData.providers &&
-          <Flow data={traefikData} />
-        }*/}
-        {/*{traefikData.providers &&
-          <GoFlow data={traefikData} />
-        }*/}
-        {/*traefikData.providers &&
-          <SvgFlow data={traefikData} />
-        */}
+      </div>
+      <div>
         {traefikData.providers &&
           <ThreeJSFlow data={traefikData} />
         }
-        {/*traefikData.providers &&
-          <VisJSFlow data={traefikData} />
-        */}
       </div>
+    </div>
     )
   }
 }

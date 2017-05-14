@@ -12,10 +12,8 @@ body {
   margin-top: 15px;
 }
 
-#joinjs-wrapper{
-  width: auto;
-  height: auto;
-  margin: auto;
+.traefik-form-search{
+  margin: 10px 0;
 }
 
 .block{
@@ -50,22 +48,6 @@ body {
   list-style-type: circle;
 }
 
-.traefik-provider, .traefik-frontend{
-  margin-bottom: 15px;
-}
-
-.traefik-frontend{
-  font-size: 0.9em;
-}
-
-.traefik-link{
-  background-image: url(images/arrow.png);
-  background-size: 100% 46px;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 53px;
-}
-
 .node circle {
   fill: #fff;
   stroke: steelblue;
@@ -80,4 +62,37 @@ body {
   fill: none;
   stroke: #ccc;
   stroke-width: 2px;
+}
+
+.node-html{
+  font-size:0.8rem;
+  overflow: hidden;
+  word-break: break-all;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-shadow: 3px 2px 6px rgba(0,0,0,0.5);
+}
+
+.node-active *{
+  font-weight:bold
+}
+
+
+
+.node-active circle {
+  fill: #fff;
+  stroke: #583;
+  stroke-width: 5;
+}
+
+.node text.node-active {
+  font: 12px sans-serif;
+  font-weight: bold;
+}
+
+.link.node-active {
+  fill: none;
+  stroke: #583;
+  stroke-width: 4px;
 }

@@ -7,6 +7,7 @@ export const SET_URL = 'SET_URL'
 export const REQUEST_TRAEFIK_PROVIDERS = 'REQUEST_TRAEFIK_PROVIDERS'
 export const RECEIVE_TRAEFIK_PROVIDERS = 'RECEIVE_TRAEFIK_PROVIDERS'
 export const INVALIDATE_DATA = 'INVALIDATE_DATA'
+export const SEARCH = 'SEARCH'
 
 export function invalidateData() {
   return {
@@ -46,6 +47,15 @@ export function setUrl(url) {
     return dispatch({
       type: SET_URL,
       data: url
+    })
+  }
+}
+
+export function search(query) {
+  return dispatch => {
+    return dispatch({
+      type: SEARCH,
+      data: query
     })
   }
 }

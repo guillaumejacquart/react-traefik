@@ -1,30 +1,39 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { createTree } from './Tree'
+import * as d3 from 'd3'
 
 
 export default class ThreeJSFlow extends Component {
-  jsonData = {
-    name: "internet",
-    children: []
-  };
-
-  routesData = {
-    name: "traefik",
-    children: []
-  }
 
   loadData(props) {
+    var jsonData = {
+      name: "traefik",
+      hasDetails: false,
+      routes: [],
+      children: []
+    };
+
+    var routesData = {
+      name: "internet",
+      hasDetails: false,
+      routes: [],
+      children: []
+    }
+    d3.selectAll('#d3-flow-svg *').remove();
     var backendsDict = {};
 
     for (var p in this.props.data.providers) {
       var provider = {
         name: p,
+        hasDetails: false,
+        routes: [],
         children: []
       }
 
       for (var b in this.props.data.providers[p].backends) {
         var urls = [];
+        var details = '<ul class="backend-url">';
         for (var s in this.props.data.providers[p].backends[b].servers) {
           var url = this.props.data.providers[p].backends[b].servers[s].url;
           var weight = this.props.data.providers[p].backends[b].servers[s].weight;
@@ -32,10 +41,14 @@ export default class ThreeJSFlow extends Component {
             url: url,
             weight: weight
           });
+          details += '<li>Url : ' + url + '<br/>Weight : ' + weight+'</li>'
         }
+        details += '</ul>';
         var backendData = {
           name: b,
-          urls: urls
+          hasDetails: true,
+          urls: urls,
+          details: details
         };
         backendsDict[b] = backendData;
       }
@@ -46,37 +59,46 @@ export default class ThreeJSFlow extends Component {
 
         var routes = [];
         for (var r in this.props.data.providers[p].frontends[f].routes) {
-          var rule = this.props.data.providers[p].frontends[f].routes[r].rule;
-          routes.push(rule);
-          this.routesData.children.push({
+          var route = {
             name: r,
-            rule: rule,
+            value: this.props.data.providers[p].frontends[f].routes[r].rule
+          };
+          routes.push(route);
+          routesData.routes.push(route);
+          routesData.children.push({
+            name: route.name,
+            route: route,
             entryPoints: entrypoints,
-            backend: backend
+            backend: backend,
+            hasDetails: true,
+            details: '<div>' + route.value + '</div>'
           })
         }
 
         provider.children.push({
           name: backend,
-          backend: backendsDict[backend]
+          hasDetails: true,
+          urls: backendsDict[backend].urls,
+          details: backendsDict[backend].details,
+          routes:routes
         });
+
+        provider.routes = provider.routes.concat(routes);
+        jsonData.routes = jsonData.routes.concat(routes);
       };
 
-      this.jsonData.children.push(provider)
+      jsonData.children.push(provider)
     }
 
-    createTree("#d3-flow-svg", this.jsonData)
-    createTree("#d3-flow-svg", this.routesData, "right-to-left")
+    createTree("#d3-flow-svg", jsonData)
+    createTree("#d3-flow-svg", routesData, "right-to-left")
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.loadData(this.props);
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props);
-
     if (_.isEqual(prevProps.data.providers, this.props.data.providers)) {
       return;
     }
