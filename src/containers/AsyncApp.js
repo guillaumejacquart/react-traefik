@@ -76,7 +76,9 @@ class AsyncApp extends Component {
         </div>
       </nav>
       <div className="container">
+        {traefikData.providers &&
         <Search onChange={this.handleSearchChange} />
+        }
         <p>
           {lastUpdatedProviders &&
             <span>
@@ -87,6 +89,9 @@ class AsyncApp extends Component {
         </p>
         {isFetching && !traefikData.providers &&
           <h2>Loading...</h2>
+        }
+        {!isFetching && !traefikData.traefik_url &&
+          <h3 className="text-center">Fill out your traefik url in the navigation header</h3>
         }
       </div>
       <div>
@@ -112,7 +117,7 @@ function mapStateToProps(state) {
     isFetching,
     lastUpdatedProviders
   } = {
-      isFetching: true
+      isFetching: false
     }
 
   return {
