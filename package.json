@@ -9,12 +9,12 @@
     "d3": "^4.8.0",
     "dagre-d3": "^0.4.17",
     "debug": "~2.6.3",
+    "dirty": "^1.1.0",
     "express": "~4.15.2",
     "gojs": "^1.7.9",
     "isomorphic-fetch": "^2.2.1",
     "jointjs": "^1.1.0",
     "jquery": "^3.2.1",
-    "level": "^1.6.0",
     "lodash": "^4.17.4",
     "morgan": "~1.8.1",
     "prop-types": "^15.5.8",
@@ -40,5 +40,6 @@
     "test-front": "react-scripts test --env=jsdom",
     "eject-front": "react-scripts eject",
     "install": "npm run build-front"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
