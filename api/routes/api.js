@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require('request');
 var dirty = require('dirty');
 var path = require('path');
-var db = dirty(path.join(__dirname, '../data/cache.db'));
+var db = dirty(path.join(__dirname, '../cache.db'));
 
 /* GET saved url listing. */
 router.get('/url', function(req, res, next) {

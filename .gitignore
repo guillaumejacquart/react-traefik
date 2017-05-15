@@ -10,8 +10,7 @@
 /build
 
 # data
-/api/data
-/data
+/api/cache.db
 
 # misc
 .DS_Store
