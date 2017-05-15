@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { createTree } from './Tree'
+import Tree from './Tree'
 import * as d3 from 'd3'
 
 
@@ -11,15 +11,28 @@ export default class ThreeJSFlow extends Component {
       name: "traefik",
       hasDetails: false,
       routes: [],
-      children: []
+      children: [],
+      image: {
+        src: 'images/traefik.png',
+        width: 100,
+        height: 100
+      },
+      className: 'traefik-root'
     };
 
     var routesData = {
       name: "internet",
       hasDetails: false,
       routes: [],
-      children: []
+      children: [],
+      image: {
+        src: 'images/cloud.png',
+        width: 100,
+        height: 100
+      },
+      className: 'internet-root'
     }
+    
     d3.selectAll('#d3-flow-svg *').remove();
     var backendsDict = {};
 
@@ -28,27 +41,33 @@ export default class ThreeJSFlow extends Component {
         name: p,
         hasDetails: false,
         routes: [],
-        children: []
+        children: [],
+        image: {
+          src: 'images/' + p + '.png',
+          width: p === "file" ? 75 : 100,
+          height: p === "file" ? 75 : 100
+        }
       }
 
       for (var b in this.props.data.providers[p].backends) {
         var urls = [];
-        var details = '<ul class="backend-url">';
         for (var s in this.props.data.providers[p].backends[b].servers) {
           var url = this.props.data.providers[p].backends[b].servers[s].url;
           var weight = this.props.data.providers[p].backends[b].servers[s].weight;
           urls.push({
-            url: url,
-            weight: weight
+            name: s,
+            hasDetails: true,
+            details: '<ul><li>Weight: ' + weight + '</li><li>URL: ' + url + '</li></ul>',
+            depth: 150,
+            width: 200,
+            className: "traefik-server"
           });
-          details += '<li>Url : ' + url + '<br/>Weight : ' + weight+'</li>'
+          
         }
-        details += '</ul>';
         var backendData = {
           name: b,
-          hasDetails: true,
           urls: urls,
-          details: details
+          children: urls
         };
         backendsDict[b] = backendData;
       }
@@ -75,11 +94,14 @@ export default class ThreeJSFlow extends Component {
           })
         }
 
+        backendsDict[backend].children.forEach((c) => {
+          c.routes = routes;
+        });
         provider.children.push({
           name: backend,
-          hasDetails: true,
           urls: backendsDict[backend].urls,
           details: backendsDict[backend].details,
+          children: backendsDict[backend].children,
           routes:routes
         });
 
@@ -90,8 +112,10 @@ export default class ThreeJSFlow extends Component {
       jsonData.children.push(provider)
     }
 
-    createTree("#d3-flow-svg", jsonData)
-    createTree("#d3-flow-svg", routesData, "right-to-left")
+    var tree = new Tree();
+    tree.createTree("#d3-flow-svg", jsonData, "left-to-right");
+    tree.createTree("#d3-flow-svg", routesData, "right-to-left");
+   // 
   }
 
   componentDidMount() {

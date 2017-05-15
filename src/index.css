@@ -16,6 +16,11 @@ body {
   margin: 10px 0;
 }
 
+#d3-flow-svg{
+  display: block;
+  margin: auto;
+}
+
 .block{
   font-size: 12px;
   word-break: break-word;
@@ -52,47 +57,82 @@ body {
   fill: #fff;
   stroke: steelblue;
   stroke-width: 3px;
+  transition: all 0.2s;
 }
 
 .node text {
   font: 12px sans-serif;
+  transition: all 0.2s;
 }
 
 .link {
   fill: none;
   stroke: #ccc;
   stroke-width: 2px;
+  transition: stroke 0.2s, stroke-width 0.2s;
 }
 
 .node-html{
   font-size:0.8rem;
   overflow: hidden;
   word-break: break-all;
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 4px;
+  border: 2px solid steelblue;
+  padding: 8px;
   box-shadow: 3px 2px 6px rgba(0,0,0,0.5);
+  transition: all 0.2s;
+  background-color: steelblue;
+  color:#fff;
 }
 
-.node-active *{
-  font-weight:bold
+.node-html ul{
+  margin: 0;
+  padding-left: 15px;
+  font-size:0.95em;
 }
 
+.node-name{
+  margin: -8px -8px 0 -8px;
+  padding: 8px;
+  border-bottom: 1px solid #003b65;
+  text-align: center;
+  font-weight:bold;
+}
 
+.node-details, .node-details *{
+  font-weight:normal !important;
+}
+
+.traefik-server .node-html{
+  background-color:#583;
+  border-color:#583;
+}
+
+.node-active * {
+  font-weight:bold;
+  transition: all 0.2s;
+  fill: #583;
+}
+
+.node-active .node-html{
+  border: 2px solid #583;
+}
 
 .node-active circle {
   fill: #fff;
   stroke: #583;
   stroke-width: 5;
+  transition: all 0.2s;
 }
 
 .node text.node-active {
   font: 12px sans-serif;
   font-weight: bold;
+  transition: all 0.2s;
 }
 
 .link.node-active {
   fill: none;
   stroke: #583;
   stroke-width: 4px;
+  transition: stroke 0.2s, stroke-width 0.2s;
 }
