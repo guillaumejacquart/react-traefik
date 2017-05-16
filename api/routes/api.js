@@ -35,14 +35,13 @@ router.put('/url', function(req, res, next) {
         })
     }
 
-    db.insert({name: 'url', value: url}, function (err, newDoc) {
+    db.update({ name: 'url' }, { name: 'url', value: url }, { upsert: true }, function (err, num, newDoc) {
         if(err){
             return res.status(500).json(err);
         }
-
         return res.json({
             status: 'ok',
-            url: newDoc.value
+            url: url
         })
     });
 });

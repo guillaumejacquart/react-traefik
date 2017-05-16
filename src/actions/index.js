@@ -67,9 +67,21 @@ export function fetchConfigReady() {
       .then(response => response.json())
       .then((json) => {
         if (json.status === 'ok') {
-          return dispatch(receiveConfig(json));
+          return dispatch(receiveConfig({
+            configReady: true,
+            traefik_url: json.url
+          }));
         }
-        return dispatch(receiveConfig(false));
+        return dispatch(receiveConfig({
+          configReady: false,
+          error: json
+        }));
+      })
+      .catch(function (error) {
+        dispatch(receiveConfig({
+          configReady: false,
+          error: error
+        }))
       });
   }
 }
@@ -94,7 +106,10 @@ export function fetchProviders(traefik_url) {
         throw new Error(json)
       })
       .catch(function (error) {
-        dispatch(receiveConfig(false))
+        dispatch(receiveConfig({
+          configReady: false,
+          error: error
+        }))
       });
   }
 }
@@ -103,11 +118,16 @@ function fetchProvidersData(dispatch) {
   return fetch(`${API_URL}/api/providers`)
     .then(response => response.json())
     .catch(function (error) {
-      dispatch(receiveConfig(false))
+      dispatch(receiveConfig({
+        configReady: false
+      }))
     })
     .then(json => {
       if(json.errno){
-        return dispatch(receiveConfig(false))
+        return dispatch(receiveConfig({
+          configReady: false,
+          error: json
+        }))
       }
       return dispatch(receiveTraefikProviders(json))
     })
