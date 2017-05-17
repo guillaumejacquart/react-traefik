@@ -4,15 +4,11 @@
   "private": true,
   "dependencies": {
     "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
     "cors": "^2.8.3",
     "d3": "^4.8.0",
-    "dagre-d3": "^0.4.17",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "gojs": "^1.7.9",
     "isomorphic-fetch": "^2.2.1",
-    "jointjs": "^1.1.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "morgan": "~1.8.1",
@@ -21,13 +17,11 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
-    "react-simple-flowchart": "^1.1.1",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
-    "serve-favicon": "~2.4.2",
-    "vis": "^4.19.1"
+    "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

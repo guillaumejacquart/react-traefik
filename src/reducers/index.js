@@ -32,16 +32,20 @@ function data(state = {
         didInvalidate: false
       })
     case RECEIVE_CONFIG:
-      return Object.assign({}, state, {
-        configReady: action.data,
-        traefik_url: action.data.url
-      })
+      var newState = {
+        configReady: action.data.configReady,
+        error: action.data.error,
+        traefik_url: action.data.traefik_url
+      }
+      if(!action.data){
+        newState.providers = false;
+      }
+      return Object.assign({}, state, newState)
     case SET_URL:
       return Object.assign({}, state, {
         traefik_url: action.data,
-        configReady: {
-          url: action.data
-        }
+        providers: false,
+        configReady: true
       })
     case SEARCH:
       newProviders = filterProviders(state.fetchedProviders, action.data);

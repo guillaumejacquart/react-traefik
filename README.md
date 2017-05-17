@@ -1,6 +1,7 @@
 # react-traefik
 
 Interactive diagram view for traefik using React and D3
+![alt text](https://image.ibb.co/enAZi5/Sans_titre.png "Screenshot")
 
 # Setup
 The easiest way to install the package is using docker. The docker runs a web application that talks to the traefik api and exposes its own api for the dashboard to call.
