@@ -7,7 +7,7 @@
 /coverage
 
 # production
-# /build
+/build
 
 # data
 /api/cache.db

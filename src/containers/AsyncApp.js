@@ -93,7 +93,7 @@ class AsyncApp extends Component {
         {!isFetching && !traefikData.traefik_url &&
           <h3 className="text-center">Fill out your traefik url in the navigation header</h3>
         }
-        {traefikData.error &&
+        {traefikData.error && !traefikData.providers &&
           <h3 className="text-center">{traefikData.error.message}</h3>
         }
       </div>

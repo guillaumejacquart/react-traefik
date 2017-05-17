@@ -23,6 +23,7 @@ function data(state = {
         isFetching: false,
         didInvalidate: false,
         providers: newProviders,
+        error: false,
         fetchedProviders: action.data,
         lastUpdatedProviders: action.receivedAt
       })
