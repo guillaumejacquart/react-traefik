@@ -4,11 +4,14 @@ FROM node:7-alpine
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Install app dependencies
-
 # Bundle app source
 COPY . /usr/src/app
-RUN npm install --production
+
+# Install all dependencies, executes post-install script and remove deps
+RUN npm install && npm cache clean #&& rm -r node_modules
+RUN npm run build-front
+# Install app production only dependencies
+RUN npm install --production && npm cache clean && cp -rp ./node_modules /tmp/node_modules
 
 EXPOSE 3001
 
