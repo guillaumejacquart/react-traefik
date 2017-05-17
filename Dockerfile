@@ -8,8 +8,8 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 # Install all dependencies, executes post-install script and remove deps
-RUN npm install && npm cache clean #&& rm -r node_modules
-RUN npm run build-front
+RUN npm install && npm cache clean && npm run build-front && rm -r node_modules
+
 # Install app production only dependencies
 RUN npm install --production && npm cache clean && cp -rp ./node_modules /tmp/node_modules
 
