@@ -35,6 +35,7 @@ export default class ThreeJSFlow extends Component {
     
     d3.selectAll('#d3-flow-svg *').remove();
     var backendsDict = {};
+    var traefikLeaves = 0;
 
     for (var p in this.props.data.providers) {
       var provider = {
@@ -70,6 +71,7 @@ export default class ThreeJSFlow extends Component {
           children: urls
         };
         backendsDict[b] = backendData;
+        traefikLeaves++;
       }
 
       for (var f in this.props.data.providers[p].frontends) {
@@ -82,6 +84,8 @@ export default class ThreeJSFlow extends Component {
             name: r,
             value: this.props.data.providers[p].frontends[f].routes[r].rule
           };
+          var scheme = entrypoints.includes('https') ? 'https://' : 'http://';
+          var url = scheme + route.value.split(":")[1];
           routes.push(route);
           routesData.routes.push(route);
           routesData.children.push({
@@ -90,7 +94,7 @@ export default class ThreeJSFlow extends Component {
             entryPoints: entrypoints,
             backend: backend,
             hasDetails: true,
-            details: '<div>' + route.value + '</div>'
+            details: '<div><a class="backend-link" target="_blank" href="' + url + '">' + route.value + '</a></div>'
           })
         }
 
@@ -113,8 +117,8 @@ export default class ThreeJSFlow extends Component {
     }
 
     var tree = new Tree();
-    tree.createTree("#d3-flow-svg", jsonData, "left-to-right");
-    tree.createTree("#d3-flow-svg", routesData, "right-to-left");
+    tree.createTree("#d3-flow-svg", jsonData, "left-to-right", traefikLeaves * 150);
+    tree.createTree("#d3-flow-svg", routesData, "right-to-left", routesData.children.length * 170);
    // 
   }
 

@@ -9,7 +9,7 @@ export default class Tree {
         this.root2 = null;
     }
 
-    createTree(selector, data, orient, callback) {
+    createTree(selector, data, orient, height) {
         // Set the dimensions and margins of the diagram
         var margin = {
                 top: 0,
@@ -18,9 +18,10 @@ export default class Tree {
                 left: 0
             },
             initWidth = Math.max(document.getElementById('d3-flow').clientWidth - 40, 1300),
-            initHeight = 600,
+            initHeight = height,
             depth = 180;
-
+        
+        console.log(initHeight);
         var orient = orient || "left-to-right";
         var coeff = orient == "left-to-right" ? 1 : -1;
         margin.left = (initWidth) / 2 + coeff*50 + (coeff == -1 ? -1 * depth / 2 : -depth / 2);

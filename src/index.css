@@ -102,6 +102,15 @@ body {
   font-weight:normal !important;
 }
 
+.backend-link{
+  color:white;
+  cursor:pointer;
+}
+
+.backend-link:hover{
+  color:white;
+}
+
 .traefik-server .node-html{
   background-color:#583;
   border-color:#583;
