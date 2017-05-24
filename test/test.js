@@ -26,7 +26,6 @@ describe('API', () => {
         chai.request(server)
             .get('/api/url')
             .end((err, res) => {
-                console.log(err);
                 res.should.have.status(404);
                 res.body.should.be.a('object');
                 res.body.should.have.deep.property('message');
@@ -75,7 +74,7 @@ describe('API', () => {
     * Test the /GET api/providers before filling it
     */
     describe('/GET api/providers', () => {
-      it('should return 404', (done) => {
+      it('should return 200', (done) => {
         chai.request(server)
             .get('/api/providers')
             .end((err, res) => {

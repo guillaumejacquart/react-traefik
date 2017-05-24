@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var path = require('path');
 var config = require('config');
 var Datastore = require('nedb')
   , db = new Datastore({ filename: config.db_path, autoload: true });
