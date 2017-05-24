@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "~1.17.1",
+    "config": "^1.26.1",
     "cors": "^2.8.3",
     "d3": "^4.8.0",
     "debug": "~2.6.3",
@@ -24,10 +25,16 @@
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.1",
+    "react-scripts": "0.9.5",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
   },
   "scripts": {
     "start": "npm run start-api",
+    "test": "mocha --timeout 10000",
     "start-api": "node ./api/bin/www",
     "start-front": "react-scripts start",
     "build-front": "react-scripts build",

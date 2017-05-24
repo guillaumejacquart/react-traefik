@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var path = require('path');
+var config = require('config');
 var Datastore = require('nedb')
-  , db = new Datastore({ filename: path.join(__dirname, '../cache.db'), autoload: true });
+  , db = new Datastore({ filename: config.db_path, autoload: true });
 
 /* GET saved url listing. */
 router.get('/url', function(req, res, next) {
