@@ -13,4 +13,12 @@ docker run -d -p 3001:3001 --network=<traefik_network> ghiltoniel/traefik-react
 ```
 
 Then go to [http://localhost:3001](http://localhost:3001) to access the dashboard
+You must fill out the traefik API URL on the header bar to access the dashboard
+
+## Traefik service discovery
+The container can also automatically discover the traefik API using the docker API to get Traefik IP address. For that, you must map the docker socket to the container volumes :
+
+```sh
+docker run -d -p 3001:3001 --network=<traefik_network> -v /var/run/docker.sock:/var/run/docker.sock ghiltoniel/traefik-react
+```
 

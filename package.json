@@ -8,6 +8,7 @@
     "cors": "^2.8.3",
     "d3": "^4.8.0",
     "debug": "~2.6.3",
+    "dockerode": "^2.4.3",
     "express": "~4.15.2",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",
