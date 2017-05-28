@@ -1,6 +1,9 @@
 # react-traefik
 
 Interactive diagram view for traefik using React and D3
+
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=guillaumejacquart&repoName=react-traefik&branch=latest&pipelineName=react-traefik&accountName=guillaumejacquart&type=cf-1)]( https://g.codefresh.io/repositories/guillaumejacquart/react-traefik/builds?filter=trigger:build;branch:latest;service:591aebd418391f000191df52~react-traefik)
+
 ![alt text](https://image.ibb.co/enAZi5/Sans_titre.png "Screenshot")
 
 # Setup
